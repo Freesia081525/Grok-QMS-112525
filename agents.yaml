@@ -1,0 +1,40 @@
+agents:
+  1_結構解析劑:
+    name: "【步驟1】模板結構解析專家"
+    description: "解析使用者提供的模板報告（例如 Article A），輸出完整的 Markdown 大綱層級結構"
+    model_options: ["gemini-2.5-flash", "gpt-4o-mini", "grok-3-mini"]
+    default_model: "gemini-2.5-flash"
+    max_tokens: 4000
+    temperature: 0.0
+
+  2_段落分類劑:
+    name: "【步驟2】觀察內容分類專家"
+    description: "根據步驟1輸出的結構，把所有原始觀察文字分類到對應章節，保留100%原始文字"
+    model_options: ["gemini-2.5-flash", "gpt-4o-mini", "grok-3-mini"]
+    default_model: "grok-3-mini"
+    max_tokens: 8000
+    temperature: 0.2
+
+  3_正式報告生成劑:
+    name: "【步驟3】醫療器材稽核報告撰寫專家"
+    description: "將分類後內容轉成正式、流暢、符合主管機關格式的繁體中文稽核報告，保留所有原始觀察證據"
+    model_options: ["gemini-2.5-flash", "gpt-4o", "grok-3-mini"]
+    default_model: "grok-3-mini"
+    max_tokens: 12000
+    temperature: 0.3
+
+  4_缺失項目標記劑:
+    name: "【步驟4】CAR 自動標記專家"
+    description: "自動辨識觀察紀錄中的缺失、異常，標記為 CAR 並建議等級"
+    model_options: ["gemini-2.5-flash", "gpt-4o-mini", "grok-3-mini"]
+    default_model: "grok-3-mini"
+    max_tokens: 4000
+    temperature: 0.1
+
+  5_後續追問產生劑:
+    name: "【步驟5】Follow-up Questions 產生器"
+    description: "根據最終報告，自動產生 8-12 條高價值的後續追問問題"
+    model_options: ["gemini-2.5-flash", "gpt-4o-mini", "grok-3-mini"]
+    default_model: "gemini-2.5-flash"
+    max_tokens: 2000
+    temperature: 0.7
