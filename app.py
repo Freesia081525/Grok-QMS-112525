@@ -1,9 +1,32 @@
 import streamlit as st
 import yaml
 import os
-from utils.grok_client import grok_chat
+#from utils.grok_client import grok_chat
 import google.generativeai as genai
 from openai import OpenAI
+import os
+from xai_sdk import Client
+from xai_sdk.chat import user, system
+
+def grok_chat(messages, model="grok-4", temperature=0.3, max_tokens=8000):
+    api_key = os.getenv("XAI_API_KEY")
+    if not api_key:
+        raise ValueError("請設定 XAI_API_KEY")
+    
+    client = Client(api_key=api_key, timeout=3600)
+    chat = client.chat.create(model=model)
+    
+    for msg in messages:
+        if msg["role"] == "system":
+            chat.append(system(msg["content"]))
+        else:
+            chat.append(user(msg["content"]))
+    
+    response = chat.sample(
+        temperature=temperature,
+        max_tokens=max_tokens
+    )
+    return response.content
 
 # ================== 載入 agents ==================
 with open("agents.yaml", encoding="utf-8") as f:
