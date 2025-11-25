@@ -1,0 +1,6 @@
+streamlit
+pyyaml
+google-generativeai
+openai
+xai_sdk
+pillow
